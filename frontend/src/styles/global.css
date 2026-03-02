@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
+:root {
+  --gold:       #C9A84C;
+  --gold-light: #E8C96A;
+  --black:      #0A0A0A;
+  --dark:       #111111;
+  --dark2:      #1A1A1A;
+  --dark3:      #222222;
+  --white:      #FFFFFF;
+  --off-white:  #F0EBE0;
+  --text-muted: #888888;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+.eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: 5px;
+  color: var(--gold); text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 16px;
+}
+.eyebrow::before {
+  content: ''; width: 40px; height: 1px;
+  background: var(--gold); display: block; flex-shrink: 0;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 4vw, 54px);
+  font-weight: 300; color: var(--white); line-height: 1.2;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+.section-header { margin-bottom: 72px; }

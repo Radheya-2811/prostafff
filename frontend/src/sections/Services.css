@@ -1,0 +1,115 @@
+.services-section {
+  padding: 120px 60px 80px;
+  background: var(--black);
+  scroll-margin-top: 72px;
+}
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 80px;
+}
+
+.svc-card {
+  background: var(--dark2);
+  padding: 44px 34px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.svc-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+.svc-card:hover::before { transform: scaleX(1); }
+.svc-card:hover { background: var(--dark3); transform: translateY(-4px); }
+
+.svc-card__num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 300;
+  color: rgba(201,168,76,0.12);
+  line-height: 1;
+  margin-bottom: 18px;
+}
+.svc-card__icon { font-size: 28px; margin-bottom: 16px; }
+.svc-card__title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.svc-card__desc {
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(240,235,224,0.6);
+  margin-bottom: 20px;
+}
+.svc-card__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.svc-card__list li {
+  font-size: 12px;
+  color: rgba(240,235,224,0.42);
+  padding-left: 16px;
+  position: relative;
+}
+.svc-card__list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* Industries */
+.industries { }
+.industries__title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+.industries__sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+.industries__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+}
+.industry-card {
+  background: var(--dark2);
+  padding: 26px 18px;
+  text-align: center;
+  transition: background 0.3s;
+}
+.industry-card:hover { background: var(--dark3); }
+.industry-card__icon { font-size: 26px; margin-bottom: 10px; }
+.industry-card__name {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--off-white);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .services-section { padding: 80px 24px; }
+  .svc-grid { grid-template-columns: 1fr; }
+  .industries__grid { grid-template-columns: repeat(3, 1fr); }
+}
