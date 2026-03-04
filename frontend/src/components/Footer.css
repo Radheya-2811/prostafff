@@ -4,11 +4,23 @@
   padding: 60px 60px 32px;
 }
 
+.brand-highlight{
+  font-weight: 700;
+  color: #4f46e5;   /* modern blue */
+}
+
 .footer__top {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 60px;
   margin-bottom: 48px;
+}
+.small-title{
+  font-size: 26px;
+}
+
+.small-title em{
+  font-size: 16px;
 }
 
 .footer__brand {

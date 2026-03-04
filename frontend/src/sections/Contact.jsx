@@ -45,7 +45,7 @@ export default function Contact() {
             </div>
             <div className="c-item">
               <div className="c-item__icon">✉</div>
-              <div><div className="c-item__label">Email</div><div className="c-item__val">info@prostaffsolution.com</div></div>
+              <div><div className="c-item__label">Email</div><div className="c-item__val">info@prostafffsolution.com</div></div>
             </div>
             <div className="c-item">
               <div className="c-item__icon">🕐</div>

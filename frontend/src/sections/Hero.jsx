@@ -22,7 +22,7 @@ export default function Hero() {
             Luxury Brands
           </h1>
           <p>
-            Prostaff Solution specialises in curating elite professionals for the world's
+            Prostafff Solution specialises in curating elite professionals for the world's
             most prestigious organisations. With over three years of excellence, we redefine
             what it means to recruit with purpose.
           </p>

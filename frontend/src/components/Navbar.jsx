@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Navbar.css'
-
+import logo from '../assets/logo.png'
 const NAV_ITEMS = [
   { label: 'Home',     id: 'home' },
   { label: 'About',    id: 'about' },
@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
-      <img src="/src/img/logo.png" alt="Logo" style={{height:"40px",width:"auto"}}/>
+      <img src={logo} alt="Logo" style={{height:"40px",width:"auto"}}/>
 
       <ul className="navbar__links">
         {NAV_ITEMS.map(({ label, id }) => (

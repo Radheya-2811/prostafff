@@ -8,7 +8,10 @@ export default function Footer() {
     <footer className="footer">
       <div className="footer__top">
         <div className="footer__brand-col">
-          <div className="footer__brand" onClick={() => scrollTo('home')}>Prostaff Solution</div>
+          <div className="footer__brand" onClick={() => scrollTo('home')}>
+            <h2 className="section-title" style={{fontSize:"26px"}}>ProStafff Solutions<br/><em style={{fontSize:"20px"}}>is a part of</em> <span className='brand-highlight'>Dubey Enterprises</span></h2>
+          </div>
+          
           <p className="footer__tagline">
             Connecting exceptional talent with the world's most prestigious luxury brands since our founding.
           </p>
@@ -37,7 +40,7 @@ export default function Footer() {
       </div>
 
       <div className="footer__bottom">
-        <span className="footer__copy">© {new Date().getFullYear()} Prostaff Solution Private Limited. All rights reserved.</span>
+        <span className="footer__copy">© {new Date().getFullYear()} Prostafff Solution Private Limited. All rights reserved.</span>
         <span className="footer__reg">Pvt. Ltd. Registered in India</span>
       </div>
     </footer>

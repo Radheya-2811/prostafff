@@ -25,7 +25,7 @@ export default function About() {
       <div className="about__grid">
         {/* Left — text + values */}
         <div className="about__text">
-          <p>Prostaff Solution Private Limited was founded with a singular vision: to bridge the gap between <strong>extraordinary talent</strong> and the brands that demand nothing less than exceptional. We understand that in the luxury sector, every hire is a statement.</p>
+          <p>Prostafff Solution Private Limited was founded with a singular vision: to bridge the gap between <strong>extraordinary talent</strong> and the brands that demand nothing less than exceptional. We understand that in the luxury sector, every hire is a statement.</p>
           <p>Our consultants bring deep industry knowledge and an unmatched network across hospitality, fashion, lifestyle, and premium retail. We don't just fill positions — we <strong>craft careers</strong> and <strong>build teams</strong> that last.</p>
           <p>With a 100% client retention rate and over 500 successful placements, our results speak for themselves. Every candidate we place is a reflection of our commitment to quality.</p>
           <div className="gold-line" />
@@ -46,7 +46,7 @@ export default function About() {
         <div className="about__right">
           <div className="quote-block">
             <blockquote>"We don't simply place professionals — we architect the foundations of exceptional organisations."</blockquote>
-            <cite>— Prostaff Solution, Est. 3+ Years</cite>
+            <cite>— Prostafff Solution, Est. 3+ Years</cite>
           </div>
           <div className="milestones">
             {MILESTONES.map((m, i) => (
