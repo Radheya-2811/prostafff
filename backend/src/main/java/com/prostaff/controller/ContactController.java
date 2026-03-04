@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/contact")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://prostafff.netlify.app")
 public class ContactController {
 
     private final EmailService emailService;
