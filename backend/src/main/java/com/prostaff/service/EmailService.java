@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,31 +41,23 @@ public class EmailService {
     private void sendAdminNotification(ContactRequest req) {
         try {
 
-            String html = buildAdminHtml(req);
+            Map<String, Object> email = Map.of(
+                    "from", fromName + " <" + fromEmail + ">",
+                    "to", List.of(adminEmail),
+                    "subject", "New Enquiry from " + req.getFirstName() + " " + req.getLastName(),
+                    "html", buildAdminHtml(req)
+            );
 
             webClient.post()
                     .uri("/emails")
                     .header("Authorization", "Bearer " + apiKey)
-                    .header("Content-Type", "application/json")
-                    .bodyValue("""
-                    {
-                      "from": "%s <%s>",
-                      "to": ["%s"],
-                      "subject": "New Enquiry from %s %s",
-                      "html": %s
-                    }
-                    """.formatted(
-                            fromName,
-                            fromEmail,
-                            adminEmail,
-                            req.getFirstName(),
-                            req.getLastName(),
-                            "\"" + html.replace("\"", "\\\"") + "\""
-                    ))
+                    .bodyValue(email)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
+
             log.info("Admin notification sent via Resend");
+
         } catch (Exception e) {
             log.error("Failed to send admin notification: {}", e.getMessage());
         }
@@ -71,32 +66,26 @@ public class EmailService {
     // ── Auto-reply to enquirer ───────────────────────────────────────────────
     private void sendAutoReply(ContactRequest req) {
         try {
-            String html = buildAutoReplyHtml(req);
+
+            Map<String, Object> email = Map.of(
+                    "from", fromName + " <" + fromEmail + ">",
+                    "to", List.of(req.getEmail()),
+                    "subject", "Thank you for reaching out — Prostaff Solution",
+                    "html", buildAutoReplyHtml(req)
+            );
 
             webClient.post()
                     .uri("/emails")
                     .header("Authorization", "Bearer " + apiKey)
-                    .header("Content-Type", "application/json")
-                    .bodyValue("""
-                    {
-                      "from": "%s <%s>",
-                      "to": ["%s"],
-                      "subject": "Thank you for reaching out — Prostaff Solution",
-                      "html": %s
-                    }
-                    """.formatted(
-                            fromName,
-                            fromEmail,
-                            req.getEmail(),
-                            "\"" + html.replace("\"", "\\\"") + "\""
-                    ))
+                    .bodyValue(email)
                     .retrieve()
                     .bodyToMono(String.class)
                     .block();
 
             log.info("Auto reply sent via Resend");
+
         } catch (Exception e) {
-            log.error("Failed to send auto-reply: {}", e.getMessage());
+            log.error("Failed to send auto reply: {}", e.getMessage());
         }
     }
 
