@@ -1,20 +1,21 @@
 package com.prostaff.service;
 
 import com.prostaff.dto.ContactRequest;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class EmailService {
 
-    private final JavaMailSender mailSender;
+    private final WebClient webClient = WebClient.create("https://api.resend.com");
+
+    @Value("${RESEND_API_KEY}")
+    private String apiKey;
 
     @Value("${prostaff.mail.admin-email}")
     private String adminEmail;
@@ -36,14 +37,32 @@ public class EmailService {
     // ── Admin notification ──────────────────────────────────────────────────
     private void sendAdminNotification(ContactRequest req) {
         try {
-            MimeMessage msg = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
-            helper.setFrom(fromEmail, fromName);
-            helper.setTo(adminEmail);
-            helper.setSubject("New Enquiry from " + req.getFirstName() + " " + req.getLastName());
-            helper.setText(buildAdminHtml(req), true);
-            mailSender.send(msg);
-            log.info("Admin notification sent for enquiry from {}", req.getEmail());
+
+            String html = buildAdminHtml(req);
+
+            webClient.post()
+                    .uri("/emails")
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
+                    .bodyValue("""
+                    {
+                      "from": "%s <%s>",
+                      "to": ["%s"],
+                      "subject": "New Enquiry from %s %s",
+                      "html": %s
+                    }
+                    """.formatted(
+                            fromName,
+                            fromEmail,
+                            adminEmail,
+                            req.getFirstName(),
+                            req.getLastName(),
+                            "\"" + html.replace("\"", "\\\"") + "\""
+                    ))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+            log.info("Admin notification sent via Resend");
         } catch (Exception e) {
             log.error("Failed to send admin notification: {}", e.getMessage());
         }
@@ -52,14 +71,30 @@ public class EmailService {
     // ── Auto-reply to enquirer ───────────────────────────────────────────────
     private void sendAutoReply(ContactRequest req) {
         try {
-            MimeMessage msg = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(msg, true, "UTF-8");
-            helper.setFrom(fromEmail, fromName);
-            helper.setTo(req.getEmail());
-            helper.setSubject("Thank you for reaching out — Prostaff Solution");
-            helper.setText(buildAutoReplyHtml(req), true);
-            mailSender.send(msg);
-            log.info("Auto-reply sent to {}", req.getEmail());
+            String html = buildAutoReplyHtml(req);
+
+            webClient.post()
+                    .uri("/emails")
+                    .header("Authorization", "Bearer " + apiKey)
+                    .header("Content-Type", "application/json")
+                    .bodyValue("""
+                    {
+                      "from": "%s <%s>",
+                      "to": ["%s"],
+                      "subject": "Thank you for reaching out — Prostaff Solution",
+                      "html": %s
+                    }
+                    """.formatted(
+                            fromName,
+                            fromEmail,
+                            req.getEmail(),
+                            "\"" + html.replace("\"", "\\\"") + "\""
+                    ))
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
+
+            log.info("Auto reply sent via Resend");
         } catch (Exception e) {
             log.error("Failed to send auto-reply: {}", e.getMessage());
         }
