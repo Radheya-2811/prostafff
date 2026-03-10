@@ -61,7 +61,7 @@ public class EmailService {
 
         } catch (Exception e) {
             log.error("Failed to send admin notification: {}", e.getMessage());
-            log.info("API KEY{},--->",apiKey);
+            log.info("API KEY{},--->",apiKey!=null);
         }
     }
 
