@@ -17,7 +17,7 @@ public class EmailService {
 
     private final WebClient webClient = WebClient.create("https://api.resend.com");
 
-    @Value("${RESEND_API_KEY}")
+    @Value("${resend.api.key}")
     private String apiKey;
 
     @Value("${prostaff.mail.admin-email}")
@@ -60,6 +60,7 @@ public class EmailService {
 
         } catch (Exception e) {
             log.error("Failed to send admin notification: {}", e.getMessage());
+            log.info("API KEY{},--->",apiKey);
         }
     }
 
